@@ -41,6 +41,7 @@ function concHtml(e){
   if(clv(e)==null)return '';const c=e.concession;
   return `<div class="conc" style="border-left:4px solid ${ec(e)}"><div><b style="color:${ec(e)}">退守程度 ${c.level} 級</b>${c.kind==='predicted'?' <span class="tag">預測情境</span>':''}<span class="tag ${c.confidence==='high'?'ok':c.confidence==='low'?'warn':''}">信心：${{high:'高',medium:'中',low:'低'}[c.confidence]||''}</span></div>
   <div>已攻陷：${esc(c.conceded_zh||'')}</div><div>仍堅守：${esc(c.holdout_zh||'')}</div><div class="cb">${esc(c.basis_zh||'')}</div></div>`}
+function homeLink(pr){const u=pr&&pr.home;if(!u)return '';let h=u;try{h=new URL(u).hostname.replace(/^www\./,'')}catch(e){}return `<a class="homelink" href="${esc(u)}" target="_blank" rel="noopener">源頭入口 ↗ ${esc(h)}</a>`}
 function entryCard(e){
   const shot=e.og_image?`<a href="${esc(e.source_url)}" target="_blank" rel="noopener"><img src="${esc(e.og_image)}" alt="來源預覽圖" loading="lazy"></a><div class="meta">來源預覽圖（og:image），版權屬原網站</div>`:'';
   return `<div class="entry"><div class="meta"><span class="dot" style="background:${ec(e)}"></span>${esc(e.date)} ·
@@ -836,7 +837,7 @@ function profileHtml(slug,inSlide){
   const L=prf.links||{};const linkHtml=[['website','網站'],['wikipedia','Wikipedia'],['blog','部落格'],['x','X'],['github','GitHub']].filter(([k])=>L[k]).map(([k,t])=>`<a href="${esc(L[k])}" target="_blank" rel="noopener">${t}</a>`).join(' · ');
   return `<div class="prof-inner${inSlide?' inslide':''}">${inSlide?'':`<button class="pback">← 回到簡報</button>`}
   <div class="prof-head"><div class="avatar big">${esc(initials(p.name))}</div><div><div class="kicker">${esc(p.group)}${prf.kind&&prf.kind!=='person'?' · '+esc(prf.kind==='team'?'團隊':'網站／機構'):''}</div><h1>${esc(prf.name||p.name)}${prf.name_zh&&prf.name_zh!==(prf.name||p.name)?` <small>${esc(prf.name_zh)}</small>`:''}</h1>
-  <p class="tag1">${esc(prf.tagline_zh||p.profile_zh||'')}</p>${(prf.roles||[]).length?`<div class="roles">${prf.roles.map(r=>`<span class="tag">${esc(r)}</span>`).join('')}</div>`:''}<div class="plinks">${linkHtml}</div></div></div>
+  <p class="tag1">${esc(prf.tagline_zh||p.profile_zh||'')}</p>${homeLink(prf)}${(prf.roles||[]).length?`<div class="roles">${prf.roles.map(r=>`<span class="tag">${esc(r)}</span>`).join('')}</div>`:''}<div class="plinks">${linkHtml}</div></div></div>
   <div class="psec"><h3>他的流程：承認 AI 攻下多少，以及 AI 2027 當初怎麼預測</h3>${stanceLegend()}${A27LEGEND}<div class="chart pchart"></div>
   ${regressHtml(p,ser)}${a27Compare(ser)}</div>
   <div class="pgrid"><div>
@@ -972,7 +973,7 @@ slide('ai2027','AI 2027',`<div class="kicker">FORECAST · AI 2027</div><div id="
   const orig=all.filter(e=>e.date==='2025-04-03').sort((a,b)=>(a._h||0)-(b._h||0));
   const pub=PUBS.find(x=>x.id==='pub-ai2027');
   root.querySelector('#a27').innerHTML=`<h2>AI 2027：2025 年 4 月 3 日發表，寫下了 AI 取代程式設計師的時間表</h2>
-  <p class="lead" style="max-width:none">${esc(pr.importance_zh||'')}</p>
+  <p class="lead" style="max-width:none">${esc(pr.importance_zh||'')}</p>${homeLink(pr)}
   <div class="two"><div class="card"><h3>發表當時預言的時間點</h3><ul class="kf">${orig.map(e=>`<li><b>${esc(e.horizon||'')}</b>　${esc(e.quote_zh)}${relOf(e)==='offtopic'?' <span class="tag">一般 AI 研發，非開發</span>':''}</li>`).join('')}</ul>
   ${pub?`<p class="meta"><a href="${esc(pub.url)}" target="_blank" rel="noopener">原網站</a>${pub.archive_url?` · <a href="${esc(pub.archive_url)}" target="_blank" rel="noopener">2025-04 存檔</a>`:''}</p>`:''}</div>
   <div class="card"><h3>之後怎麼修訂</h3><ul class="kf">${all.filter(e=>e.date>'2025-04-03').sort((a,b)=>a._d-b._d).map(e=>`<li><b>${esc(e.date)}</b>　${esc(shortTopic(e.topic))}${e.horizon?` → <b style="color:#f5b942">${esc(e.horizon)}</b>`:''}</li>`).join('')}</ul></div></div>
@@ -992,7 +993,7 @@ FC_ORDER.filter(sl=>PEOPLE.some(p=>p.slug===sl)).forEach(sl=>{
   const p=PEOPLE.find(x=>x.slug===sl);const pr=PROFILES[sl]||{};
   slide('fc-'+sl,pr.name||p.name,`<div class="kicker">FORECAST · ${esc(pr.name||p.name)}</div><div class="fcs"></div>`,(root)=>{
     const es=ALL.filter(e=>e.slug===sl).sort((a,b)=>a._d-b._d);
-    root.querySelector('.fcs').innerHTML=`<div class="prof-head"><div class="avatar big">${esc(initials(p.name))}</div><div><h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem)">${esc(pr.name||p.name)}</h1><p class="tag1">${esc(pr.tagline_zh||p.profile_zh||'')}</p></div></div>
+    root.querySelector('.fcs').innerHTML=`<div class="prof-head"><div class="avatar big">${esc(initials(p.name))}</div><div><h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem)">${esc(pr.name||p.name)}</h1><p class="tag1">${esc(pr.tagline_zh||p.profile_zh||'')}</p>${homeLink(pr)}</div></div>
     <div class="two"><div class="psec"><h3>為什麼重要</h3><p>${esc(pr.importance_zh||'')}</p>${pr.role_in_debate_zh?`<h3>在這場討論中的角色</h3><p>${esc(pr.role_in_debate_zh)}</p>`:''}</div>
     <div class="psec"><h3>他們說過什麼（${es.length} 則）</h3><ul class="kf">${es.map(e=>`<li><b>${esc(e.date)}</b>${e.horizon?` → <b style="color:#f5b942">預測 ${esc(e.horizon)}</b>`:''}　${esc(e.quote_zh.length>160?e.quote_zh.slice(0,160)+'…':e.quote_zh)}${relOf(e)==='offtopic'?' <span class="tag">非開發</span>':''}</li>`).join('')}</ul></div></div>
     <h3>預測時間點</h3>${PRED_LEGEND}<div class="chart fcarr"></div>`;
@@ -1005,7 +1006,7 @@ slide('fc-others','其他預測團體',`<div class="kicker">FORECASTS · OTHERS<
   const ps=FC_OTHERS.map(sl=>PEOPLE.find(p=>p.slug===sl)).filter(Boolean);
   root.querySelector('#fco').innerHTML=`${PRED_LEGEND}<div class="chart" id="fcoarr"></div>
   <div class="grid cards fcocards" style="margin-top:1rem">${ps.map(p=>{const pr=PROFILES[p.slug]||{};const es=ALL.filter(e=>e.slug===p.slug).sort((a,b)=>a._d-b._d);
-    return `<div class="card"><h3>${esc(pr.name||p.name)}</h3><div class="ptag">${esc(pr.tagline_zh||p.profile_zh||'')}</div>
+    return `<div class="card"><h3>${esc(pr.name||p.name)}</h3><div class="ptag">${esc(pr.tagline_zh||p.profile_zh||'')}</div>${homeLink(pr)}
     <p style="font-size:.84rem;line-height:1.6;margin:.5rem 0">${esc(pr.importance_zh||'')}</p>
     <ul class="kf" style="font-size:.82rem">${es.map(e=>`<li><a href="#" class="fce" data-e="${esc(e.id)}"><b>${esc(e.date)}</b>${e.horizon?` → <b style="color:#f5b942">預測 ${esc(e.horizon)}</b>`:''}　${esc(shortTopic(e.topic))}</a>${relOf(e)==='offtopic'?' <span class="tag">非開發</span>':''}</li>`).join('')}</ul>
     ${pr.note?`<div class="mute" style="font-size:.75rem">備註：${esc(pr.note)}</div>`:''}</div>`}).join('')}</div>`;
