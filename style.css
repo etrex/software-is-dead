@@ -238,3 +238,6 @@ details.adv{margin:1rem 0}details.adv summary{cursor:pointer;color:var(--accent)
 
 .homelink{display:inline-block;margin:.5rem 0 .3rem;padding:.25rem .7rem;border:1px solid #f5b942;border-radius:999px;color:#f5b942;font-size:.82rem;text-decoration:none}
 .homelink:hover{background:#f5b94222}
+#gloss .ghead{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+#gloss .gx{border:0;background:transparent;color:var(--mute);font-size:.9rem;line-height:1;padding:.2rem .3rem;border-radius:6px;cursor:pointer}
+#gloss .gx:hover{background:#ffffff1a;color:#fff}

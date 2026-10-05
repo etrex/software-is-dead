@@ -1396,8 +1396,10 @@ function updateGloss(el){
   const txt=el.textContent||'';const hits=GLOSSARY.filter(g=>g.re.test(txt));
   if(!hits.length){glossEl.hidden=true;return}
   glossEl.hidden=false;
-  glossEl.innerHTML=`<button class="gtog">${glossOpen?'▾':'▸'} 本頁名詞（${hits.length}）</button>${glossOpen?`<div class="glist">${hits.map(g=>`<div class="gi"><b>${esc(g.t)}</b><div>${esc(g.d)}</div></div>`).join('')}</div>`:''}`;
-  glossEl.querySelector('.gtog').onclick=()=>{glossOpen=!glossOpen;try{localStorage.setItem('glossOpen',glossOpen?'1':'0')}catch(e){}updateGloss(el)};
+  glossEl.innerHTML=`<div class="ghead"><button class="gtog">${glossOpen?'▾':'▸'} 本頁名詞（${hits.length}）</button>${glossOpen?'<button class="gx" aria-label="收合本頁名詞" title="收合">✕</button>':''}</div>${glossOpen?`<div class="glist">${hits.map(g=>`<div class="gi"><b>${esc(g.t)}</b><div>${esc(g.d)}</div></div>`).join('')}</div>`:''}`;
+  const gtoggle=()=>{glossOpen=!glossOpen;try{localStorage.setItem('glossOpen',glossOpen?'1':'0')}catch(e){}updateGloss(el)};
+  glossEl.querySelector('.gtog').onclick=gtoggle;
+  const gx=glossEl.querySelector('.gx');if(gx)gx.onclick=gtoggle;
 }
 
 
