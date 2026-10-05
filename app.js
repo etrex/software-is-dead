@@ -206,7 +206,7 @@ const dmin=d3.min(ALL,e=>e._d),dmax=d3.max(ALL,e=>e._d);
 slide('title','封面',`<div class="title-slide"><div class="kicker">TRACKING SURVEY · 2023 → NOW</div>
 <h1>軟體開發<br>將死？</h1>
 <p class="lead">2023 年起，業界大老、AI 實驗室與預測團隊怎麼描述「現在」，又怎麼預言「未來」？一場追蹤每個人說法如何改變的調查。</p>
-<p class="lead">資料更新日：${esc(DATA.generated)}　·　按 → 開始</p><p class="mute" style="max-width:760px;margin:1rem 0 0;font-size:.85rem;line-height:1.6"><b>分工與免責聲明：</b><b>卡米哥決定要呈現什麼、怎麼呈現；其他所有部分</b>（搜尋資料、查證、翻譯、分類與評分、撰寫文字、製作網站）<b>都由 Claude Code 負責</b>。資料<b>未經人工審查，不保證完全正確</b>，引文、日期與分數請以原始來源為準。</p></div>`);
+<p class="lead" style="color:var(--fg,#fff);font-weight:600;margin-bottom:.2em">製作：卡米哥 × Claude Code</p><p class="lead">資料更新日：${esc(DATA.generated)}　·　按 → 開始</p><p class="mute" style="max-width:760px;margin:1rem 0 0;font-size:.85rem;line-height:1.6"><b>分工與免責聲明：</b><b>卡米哥決定要呈現什麼、怎麼呈現；其他所有部分</b>（搜尋資料、查證、翻譯、分類與評分、撰寫文字、製作網站）<b>都由 Claude Code 負責</b>。資料<b>未經人工審查，不保證完全正確</b>，引文、日期與分數請以原始來源為準。</p></div>`);
 
 slide('howto','怎麼讀這份簡報',`<div class="kicker">HOW TO READ</div><h2>五個色階、兩種發言、一個可信度標記</h2>
 <p class="lead">每則發言都有原文引述、繁中翻譯、來源網址。我們替每則發言標上「立場分數」，方便在圖上比較。</p>
