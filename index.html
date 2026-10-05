@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>軟體開發將死？ 調查簡報</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="bar">
+  <div id="crumb">軟體開發將死？</div>
+  <div id="progress"><i></i></div>
+  <nav>
+    <button id="btn-outline" title="大綱 (O)">☰ 大綱</button>
+    <button id="btn-fs" title="全螢幕 (F)">⛶</button>
+  </nav>
+</header>
+<main id="deck"><noscript>需要開啟 JavaScript。</noscript></main>
+<footer id="foot">
+  <button id="prev" aria-label="上一頁">←</button>
+  <span id="pageno"></span>
+  <button id="next" aria-label="下一頁">→</button>
+  <span class="hint">← → 換頁　O 大綱　滾輪縮放圖表　拖曳平移</span>
+</footer>
+<aside id="drawer" aria-hidden="true"><button id="drawer-back" hidden aria-label="返回">← 返回</button><button id="drawer-close" aria-label="關閉">✕</button><div id="drawer-body"></div></aside>
+<div id="outline" hidden><div id="outline-list"></div></div>
+<div id="tip" hidden></div>
+<script src="vendor/d3.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
